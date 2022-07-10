@@ -2,6 +2,8 @@
 
 Demo link: https://bookwormrecomm.herokuapp.com/
 
+## Table of Contents
+
 * [Group Project _ Recommender System](#group-project-_-recommender-system)
    * [Overview](#overview)
    * [Recommendations based on user id (Collaborative Filtering)](#recommendations-based-on-user-id-collaborative-filtering)
