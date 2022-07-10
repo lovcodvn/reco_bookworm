@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NEW</title>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap" rel="stylesheet">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+
+</head>
+
+<body id="content">
+
+	<div class="results">
+	    <center>
+	      <h2 id="name" class="text-uppercase" style="font-family: 'Rowdies', cursive;">{{title}}</h2>
+	    </center>
+	</div>
+	<br/>
+
+{% if title != "" %}
+  <div id="mycontent">
+    <div id="mcontent">
+      <div class="poster-lg">
+        <img class="poster" style="border-radius: 40px;margin-left: 90px;" height="300" width="188" src={{poster}}>
+      </div>
+      <div class="poster-sm text-center">
+        <img class="poster" style="border-radius: 40px;margin-bottom: 5%;" height="300" width="188" src={{poster}}>
+      </div>
+      <div id="details">
+        <br/>
+        <h6 id="title" style="color:white;">TITLE: &nbsp;{{title}}</h6>
+        <h6 id="authors" style="color:white;">AUTHORS: &nbsp;{{authors}}</h6>-->
+        <h6 id="overview" style="color:white;max-width: 85%">OVERVIEW: <br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{overview}}</h6>
+        <h6 id="vote_average" style="color:white;">RATING: &nbsp;{{vote_average}}/5 ({{vote_count}} votes)</h6>
+        <h6 id="genres" style="color:white;">GENRE: &nbsp;{{genres}}</h6>
+        <h6 id="date" style="color:white;">RELEASE DATE: &nbsp;{{release_date}}</h6>
+<!--        <h6 id="runtime" style="color:white;">RUNTIME: &nbsp;{{runtime}}</h6>-->
+<!--        <h6 id="status" style="color:white;">STATUS: &nbsp;{{status}}</h6>-->
+      </div>
+    </div>
+  </div>  
+  <br/>
+{% endif %}
+
+<!--Specific greetings and models based on user inputs-->
+<div class="book" style="color: #E8E8E8;">
+    <center><h2 style="font-family: 'Rowdies', cursive;">HOWDY USER {{user_id}}! WELCOME TO PROJECT BOOKWORM </h2></center>
+</div>
+
+<div class="book" style="color: #E8E8E8;">
+    <center><h5>(Click any of the books to get recommendation)</h5></center>
+</div>
+
+
+<!--combined book cards-->
+{% if book_cards|length > 1 %}
+    <div class="book" style="color: #E8E8E8;">
+    <center><h3 style="font-family: 'Rowdies', cursive;">Top Recommendations </h3></center>
+</div>
+  <div class="book-content">
+    {% for poster, details in book_cards.items() if not book_cards.hidden %}
+      <div class="card" style="width: 14rem;" title="{{details[1]}}" onclick="recommendcard(this)">
+        <div class="imghvr">
+          <img class="card-img-top" height="360" width="240" alt="{{details[0]}} - poster" src={{poster}}>
+          <div class="card-img-overlay" >
+            <span class="card-text" style="font-size:15px;background: #000000b8;color:white;padding:2px 5px;border-radius: 10px;"><span class="fa fa-star checked">&nbsp; {{details[2]}}/5</span></span>
+          </div>
+          <div class=".card-img-overlay" style="position: relative;">
+            <span class="card-text" style="font-size:15px;position:absolute;bottom:20px;left:15px;background: #000000b8;color:white;padding: 5px;border-radius: 10px;">{{details[3]}}</span>
+          </div>
+          <figcaption class="fig">
+            <button class="card-btn btn btn-danger"> Click Me </button>
+          </figcaption>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" style="font-family: 'Rowdies', cursive;font-size: 17px;">{{details[0]|upper}}</h5>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+    {% endif %}
+
+<!-- b_book_cards    -->
+ {% if b_book_cards|length > 1 %}
+    <hr class="solid">
+       <div class="book" style="color: #E8E8E8;">
+   <center><h3 style="font-family: 'Rowdies', cursive;">Recommended Based on Book Similarity: {{ title }}</h3></center>
+</div>
+  <div class="book-content">
+    {% for poster, details in b_book_cards.items() if not b_book_cards.hidden %}
+      <div class="card" style="width: 14rem;" title="{{details[1]}}" onclick="recommendcard(this)">
+        <div class="imghvr">
+          <img class="card-img-top" height="360" width="240" alt="{{details[0]}} - poster" src={{poster}}>
+          <div class="card-img-overlay" >
+            <span class="card-text" style="font-size:15px;background: #000000b8;color:white;padding:2px 5px;border-radius: 10px;"><span class="fa fa-star checked">&nbsp; {{details[2]}}/5</span></span>
+          </div>
+          <div class=".card-img-overlay" style="position: relative;">
+            <span class="card-text" style="font-size:15px;position:absolute;bottom:20px;left:15px;background: #000000b8;color:white;padding: 5px;border-radius: 10px;">{{details[3]}}</span>
+          </div>
+          <figcaption class="fig">
+            <button class="card-btn btn btn-danger"> Click Me </button>
+          </figcaption>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" style="font-family: 'Rowdies', cursive;font-size: 17px;">{{details[0]|upper}}</h5>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<!-- g_book_cards    -->
+ {% if g_book_cards|length > 1 %}
+    <hr class="solid">
+       <div class="book" style="color: #E8E8E8;">
+    <center><h3 style="font-family: 'Rowdies', cursive;">Recommended Based on Genre: {{ genre }}</h3></center>
+    </div>
+  <div class="book-content">
+    {% for poster, details in g_book_cards.items() if not g_book_cards.hidden %}
+      <div class="card" style="width: 14rem;" title="{{details[1]}}" onclick="recommendcard(this)">
+        <div class="imghvr">
+          <img class="card-img-top" height="360" width="240" alt="{{details[0]}} - poster" src={{poster}}>
+          <div class="card-img-overlay" >
+            <span class="card-text" style="font-size:15px;background: #000000b8;color:white;padding:2px 5px;border-radius: 10px;"><span class="fa fa-star checked">&nbsp; {{details[2]}}/5</span></span>
+          </div>
+          <div class=".card-img-overlay" style="position: relative;">
+            <span class="card-text" style="font-size:15px;position:absolute;bottom:20px;left:15px;background: #000000b8;color:white;padding: 5px;border-radius: 10px;">{{details[3]}}</span>
+          </div>
+          <figcaption class="fig">
+            <button class="card-btn btn btn-danger"> Click Me </button>
+          </figcaption>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" style="font-family: 'Rowdies', cursive;font-size: 17px;">{{details[0]|upper}}</h5>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<!-- u_book_cards    -->
+{% if u_book_cards|length > 1 %}
+    <hr class="solid">
+    <div class="book" style="color: #E8E8E8;">
+    <center><h3 style="font-family: 'Rowdies', cursive;">Recommended Based on User Profile: User {{ user_id }} </h3></center>
+</div>
+  <div class="book-content">
+    {% for poster, details in u_book_cards.items() if not u_book_cards.hidden %}
+      <div class="card" style="width: 14rem;" title="{{details[1]}}" onclick="recommendcard(this)">
+        <div class="imghvr">
+          <img class="card-img-top" height="360" width="240" alt="{{details[0]}} - poster" src={{poster}}>
+          <div class="card-img-overlay" >
+            <span class="card-text" style="font-size:15px;background: #000000b8;color:white;padding:2px 5px;border-radius: 10px;"><span class="fa fa-star checked">&nbsp; {{details[2]}}/5</span></span>
+          </div>
+          <div class=".card-img-overlay" style="position: relative;">
+            <span class="card-text" style="font-size:15px;position:absolute;bottom:20px;left:15px;background: #000000b8;color:white;padding: 5px;border-radius: 10px;">{{details[3]}}</span>
+          </div>
+          <figcaption class="fig">
+            <button class="card-btn btn btn-danger"> Click Me </button>
+          </figcaption>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" style="font-family: 'Rowdies', cursive;font-size: 17px;">{{details[0]|upper}}</h5>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+    {% endif %}
+
+<!-- p_book_cards    -->
+{% if p_book_cards|length > 1 %}
+    <hr class="solid">
+    <div class="book" style="color: #E8E8E8;">
+    <center><h3 style="font-family: 'Rowdies', cursive;">Recommended Based On: Most Popular Books </h3></center>
+</div>
+  <div class="book-content">
+    {% for poster, details in p_book_cards.items() if not p_book_cards.hidden %}
+      <div class="card" style="width: 14rem;" title="{{details[1]}}" onclick="recommendcard(this)">
+        <div class="imghvr">
+          <img class="card-img-top" height="360" width="240" alt="{{details[0]}} - poster" src={{poster}}>
+          <div class="card-img-overlay" >
+            <span class="card-text" style="font-size:15px;background: #000000b8;color:white;padding:2px 5px;border-radius: 10px;"><span class="fa fa-star checked">&nbsp; {{details[2]}}/5</span></span>
+          </div>
+          <div class=".card-img-overlay" style="position: relative;">
+            <span class="card-text" style="font-size:15px;position:absolute;bottom:20px;left:15px;background: #000000b8;color:white;padding: 5px;border-radius: 10px;">{{details[3]}}</span>
+          </div>
+          <figcaption class="fig">
+            <button class="card-btn btn btn-danger"> Click Me </button>
+          </figcaption>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" style="font-family: 'Rowdies', cursive;font-size: 17px;">{{details[0]|upper}}</h5>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+    {% endif %}
+
+<!--    <div class="book" style="color: #E8E8E8;">-->
+<!--    <center><h3 style="font-family: 'Rowdies', cursive;"> OOPS! No books found. Please try other combinations  </h3></center>-->
+<!--        </div>-->
+<!--    <center><img src="https://cdn.glitch.com/0e4d1ff3-5897-47c5-9711-d026c01539b8%2Fbddfd6e4434f42662b009295c9bab86e.gif?v=1573157191712" alt="this slowpoke moves" class="center" width="250" alt="404 image"/></center>-->
+<br/><br/><br/><br/>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='recommender.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
