@@ -37,4 +37,5 @@ By using rating matrix, the model learns users' preferences and similar users. I
 
 ## Credits
 Base frontend framework and design are inspired by https://github.com/Tharun-tharun/Movie-Recommendation-System-with-Sentiment-Analysis
+
 Collaboratinve Deep Learning for Recommender System: https://arxiv.org/abs/1409.2944
