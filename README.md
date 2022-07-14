@@ -1,4 +1,4 @@
-# Group Project _ Recommender System
+# Project _ Recommender System for Books
 
 For illustration, this is our demo : https://bookwormrecomm.herokuapp.com/ 
 To understand how the recommendations are selected, please read the descriptions below.
