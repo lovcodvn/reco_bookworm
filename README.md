@@ -1,6 +1,6 @@
 # Project _ Recommender System for Books
 
-For illustration, this is our demo : https://bookwormrecomm.herokuapp.com/ 
+For illustration, this is my demo : https://bookwormrecomm.herokuapp.com/ 
 To understand how the recommendations are selected, please read the descriptions below.
 
 ## Table of Contents
